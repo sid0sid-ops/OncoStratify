@@ -51,7 +51,8 @@ RUN R -e " \
     'DT', \
     'shinycssloaders', \
     'shinyjs', \
-    'bsicons' \
+    'bsicons', \
+    'randomForestSRC' \
   ), quietly = TRUE); \
   \
   message('✓ All packages successfully installed') \

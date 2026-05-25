@@ -13,7 +13,10 @@ Imports:
     dplyr (>= 1.0.0),
     ggplot2 (>= 3.3.0),
     DT (>= 0.20),
-    shinycssloaders (>= 1.0.0)
+    shinycssloaders (>= 1.0.0),
+    shinyjs,
+    bsicons,
+    randomForestSRC
 Suggests:
     testthat (>= 3.0.0)
 Encoding: UTF-8
