@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  oncostratify:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    container_name: oncostratify-app
+    
+    ports:
+      - "3838:3838"
+    
+    volumes:
+      # Cache persists between runs
+      - oncostratify-cache:/srv/shiny-server/OncoStratify/inst/cache
+      # Logs accessible from host
+      - ./logs:/srv/shiny-server/OncoStratify/logs
+    
+    environment:
+      - SHINY_PORT=3838
+      - LOG_LEVEL=INFO
+      - USE_REAL_DATA=FALSE
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3838/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    
+    networks:
+      - oncostratify-network
+    
+    labels:
+      - "com.oncostratify.description=OncoStratify Shiny App"
+      - "com.oncostratify.version=2.0"
+
+volumes:
+  oncostratify-cache:
+    driver: local
+
+networks:
+  oncostratify-network:
+    driver: bridge

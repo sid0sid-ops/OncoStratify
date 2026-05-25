@@ -1,0 +1,39 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+.Rprofile.local
+*.Rproj
+
+# Logs
+logs/
+*.log
+
+# Cache
+inst/cache/
+*.rds
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env.local
+.env.*.local
+
+# Docker
+Dockerfile.local
+docker-compose.override.yml
+
+# Testing
+coverage/
+.coverage
+
+# Temporary
+tmp/
+temp/
+*.tmp

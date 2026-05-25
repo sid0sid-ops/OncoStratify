@@ -1,0 +1,6 @@
+# Optional Python dependencies for automation scripts
+# These are NOT required to run the Shiny app
+
+docker==6.1.0
+pyyaml==6.0
+requests==2.31.0

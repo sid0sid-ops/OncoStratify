@@ -1,0 +1,17 @@
+.git
+.gitignore
+.Rhistory
+.RData
+.Rproj.user
+.DS_Store
+.vscode
+.env.local
+logs/*
+inst/cache/*
+*.log
+*.swp
+*.swo
+*~
+README_DEV.md
+.github/workflows/test.yml
+tests/

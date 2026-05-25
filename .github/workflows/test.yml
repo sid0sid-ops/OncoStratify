@@ -1,0 +1,55 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        r-version: ['4.0', '4.3']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: ${{ matrix.r-version }}
+    
+    - name: Install dependencies
+      run: |
+        install.packages(c('shiny', 'bslib', 'survival', 'survminer', 'dplyr', 'ggplot2', 'DT', 'shinycssloaders', 'testthat'), repos = 'https://cran.r-project.org')
+      shell: Rscript {0}
+    
+    - name: Run tests
+      run: |
+        testthat::test_dir('tests/')
+      shell: Rscript {0}
+    
+    - name: Check R CMD
+      run: |
+        devtools::check(args = c('--no-tests'))
+      shell: Rscript {0}
+
+  docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: docker build -t oncostratify:test .
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm \
+          -e SHINY_PORT=3838 \
+          --health-cmd="curl -f http://localhost:3838/ || exit 1" \
+          --health-interval=10s \
+          --health-timeout=5s \
+          --health-retries=3 \
+          oncostratify:test &
+        sleep 15
+        curl -f http://localhost:3838/ || exit 1
