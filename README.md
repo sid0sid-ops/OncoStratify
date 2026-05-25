@@ -95,7 +95,24 @@ When analyzing the **Global Cohort** under the **Ensemble Stacking (MoE)** model
 
 ---
 
-## 3. Mathematical Formulations
+## 3. Biomarker Clinical Reference & Interpretation
+
+OncoStratify comes pre-configured with 8 clinical and molecular biomarkers tailored for Head and Neck / Oral Squamous Cell Carcinomas (HNSCC/OSCC).
+
+| Biomarker | Category | Unit | Prognostic Role | Biological & Clinical Interpretation |
+| :--- | :--- | :--- | :--- | :--- |
+| **HPV_E6E7** | Viral Load | $\text{log}_2$ TPM | **Favorable** (Better Prognosis) | Oncogenic viral transcripts (E6/E7). High expression indicates HPV-driven oral cancer, which typically exhibits significantly higher sensitivity to radiotherapy and improved overall survival compared to HPV-negative subtypes. |
+| **Tobacco_Exposure** | Etiology | Pack-Years | **Unfavorable** (Poorer Prognosis) | Cumulative lifetime tobacco smoking/chewing exposure. High exposure promotes aggressive mutational signatures (e.g., SBS29) and leads to treatment-resistant tumor biology. |
+| **TP53** | Gene Expression | $\text{log}_2$ TPM | **Favorable** (Better Prognosis) | Tumor suppressor gene. High expression represents functional TP53 activity, whereas low expression or mutational inactivation is common in tobacco-driven oral cancers. |
+| **CD8A** | Immune Infiltration | $\text{log}_2$ TPM | **Favorable** (Better Prognosis) | Cytotoxic T-cell marker. High CD8+ T-cell infiltration denotes an active, immunologically "hot" tumor microenvironment, which is responsive to immune checkpoint inhibitors. |
+| **EGFR** | Targeted Therapy | $\text{log}_2$ TPM | **Unfavorable** (Poorer Prognosis) | Epidermal Growth Factor Receptor. Overexpressed in ~90% of oral squamous cell carcinomas, leading to hyper-proliferation, local invasion, and poorer survival. Target for Cetuximab. |
+| **MKI67** (Ki-67) | Proliferation | $\text{log}_2$ TPM | **Unfavorable** (Poorer Prognosis) | Active cell proliferation index. High expression levels of Ki-67 represent rapid cell division, high-grade tumor kinetics, and aggressive clinical progression. |
+| **TumorPurity** | Clinical Score | Fraction (0-1) | **Variable** | The proportion of malignant cells vs. stroma and infiltrating immune cells in the microenvironment. Low purity indicates heavy immune/stromal infiltration (can signify hot immune tumors). |
+| **MutationBurden** | Clinical Score | Mut/Mb | **Variable** | Somatic Mutation Density (TMB). Highly correlated with tobacco carcinogen exposure. High TMB generates neoantigens, often predicting superior responses to anti-PD-1 immunotherapy. |
+
+---
+
+## 4. Mathematical Formulations
 
 OncoStratify implements standard non-parametric, semi-parametric, and machine learning survival analysis methods.
 
@@ -143,7 +160,7 @@ Where:
 
 ---
 
-## 4. AI Mixture of Experts (MoE) Stacking Engine
+## 5. AI Mixture of Experts (MoE) Stacking Engine
 
 When switching to **Ensemble Stacking (MoE)** mode, OncoStratify transitions from single-variable analysis to a multi-variable machine learning prediction engine utilizing all 8 biomarkers (TP53, EGFR, CD8A, MKI67, Tumor Purity, TMB, and cohort-specific markers like Tobacco Exposure and HPV viral load).
 
@@ -172,7 +189,7 @@ graph TD
 
 ---
 
-## 5. Key Workstation Features
+## 6. Key Workstation Features
 
 *   **Multi-Cohort Ingestion**:
     *   **Global Cohort**: Simulated Head & Neck Squamous Cell Carcinoma (TCGA-HNSC-like, $n=200$) with clinical biomarkers (TP53, EGFR, etc.).
@@ -193,7 +210,7 @@ graph TD
 
 ---
 
-## 6. Local Setup & Verification
+## 7. Local Setup & Verification
 
 ### Prerequisites
 *   **R Version**: $\ge 4.0.0$ (R 4.6.0+ recommended)
@@ -221,7 +238,7 @@ All 86 test cases should pass successfully.
 
 ---
 
-## 7. Production Deployment Options
+## 8. Production Deployment Options
 
 ### Docker Deployment (Recommended)
 OncoStratify is fully containerized. To build and deploy using Docker:
@@ -245,7 +262,7 @@ sudo systemctl restart shiny-server
 
 ---
 
-## 8. Future Development Roadmap
+## 9. Future Development Roadmap
 
 OncoStratify's architecture is built to scale. Future development phases include:
 
