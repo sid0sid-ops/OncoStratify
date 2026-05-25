@@ -19,18 +19,20 @@ jobs:
         r-version: ${{ matrix.r-version }}
     
     - name: Install dependencies
-      run: |
-        install.packages(c('shiny', 'bslib', 'survival', 'survminer', 'dplyr', 'ggplot2', 'DT', 'shinycssloaders', 'testthat'), repos = 'https://cran.r-project.org')
-      shell: Rscript {0}
-    
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        extra-packages: |
+          any::devtools
+          any::rcmdcheck
+
     - name: Run tests
       run: |
         testthat::test_dir('tests/')
       shell: Rscript {0}
-    
+
     - name: Check R CMD
       run: |
-        devtools::check(args = c('--no-tests'))
+        rcmdcheck::rcmdcheck(args = c('--no-tests'), error_on = 'error')
       shell: Rscript {0}
 
   docker:
