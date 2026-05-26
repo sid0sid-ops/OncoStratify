@@ -25,11 +25,10 @@ jobs:
         r-version: ${{ matrix.r-version }}
     
     - name: Install dependencies
-      uses: r-lib/actions/setup-r-dependencies@v2
-      with:
-        extra-packages: |
-          any::devtools
-          any::rcmdcheck
+      run: |
+        options(repos = c(CRAN = "https://cloud.r-project.org"))
+        install.packages(c('shiny', 'bslib', 'survival', 'survminer', 'dplyr', 'ggplot2', 'DT', 'shinycssloaders', 'shinyjs', 'bsicons', 'randomForestSRC', 'testthat', 'rcmdcheck'))
+      shell: Rscript {0}
 
     - name: Run tests
       run: |
