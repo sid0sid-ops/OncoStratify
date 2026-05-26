@@ -8,7 +8,7 @@ jobs:
     
     strategy:
       matrix:
-        r-version: ['4.0', '4.3']
+        r-version: ['4.2', '4.3']
     
     steps:
     - uses: actions/checkout@v3

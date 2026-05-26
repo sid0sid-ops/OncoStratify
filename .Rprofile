@@ -6,6 +6,9 @@
 #
 # =============================================================================
 
+# Unset SHINY_SERVER_VERSION to prevent internal Shiny version comparison errors in Docker/CI
+Sys.setenv(SHINY_SERVER_VERSION = "")
+
 # Set working directory safely
 if (interactive() && requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
   tryCatch({

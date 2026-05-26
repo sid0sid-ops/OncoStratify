@@ -11,6 +11,9 @@
 
 FROM rocker/shiny:4.3.2
 
+# Clear SHINY_SERVER_VERSION to bypass Shiny package version comparison crash
+ENV SHINY_SERVER_VERSION=""
+
 # Set system variables to prevent interactive prompts during apt-get
 ENV DEBIAN_FRONTEND=noninteractive
 
