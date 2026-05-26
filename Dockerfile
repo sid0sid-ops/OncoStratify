@@ -74,4 +74,4 @@ HEALTHCHECK --interval=15s --timeout=5s --start-period=15s --retries=3 \
   CMD curl -f http://localhost:3838/ || exit 1
 
 # Run the Shiny application
-CMD ["R", "-e", "shiny::runApp('/srv/shiny-server/OncoStratify', host = '0.0.0.0', port = 3838)"]
+CMD ["sh", "-c", "unset SHINY_SERVER_VERSION && R -e \"Sys.setenv(SHINY_SERVER_VERSION = ''); shiny::runApp('/srv/shiny-server/OncoStratify', host = '0.0.0.0', port = 3838)\""]
