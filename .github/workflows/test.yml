@@ -53,6 +53,7 @@ jobs:
     - name: Test Docker image
       run: |
         docker run --rm \
+          -p 3838:3838 \
           -e SHINY_PORT=3838 \
           --health-cmd="curl -f http://localhost:3838/ || exit 1" \
           --health-interval=10s \
