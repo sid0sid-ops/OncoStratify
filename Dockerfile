@@ -61,6 +61,12 @@ RUN R -e " \
   message('✓ All packages successfully installed') \
 "
 
+# Prevent Shiny version comparison error site-wide by unsetting SHINY_SERVER_VERSION in Rprofile.site
+RUN mkdir -p /usr/local/lib/R/etc /usr/lib/R/etc /etc/R && \
+    echo "Sys.setenv(SHINY_SERVER_VERSION = '')" >> /usr/local/lib/R/etc/Rprofile.site && \
+    echo "Sys.setenv(SHINY_SERVER_VERSION = '')" >> /usr/lib/R/etc/Rprofile.site && \
+    echo "Sys.setenv(SHINY_SERVER_VERSION = '')" >> /etc/R/Rprofile.site
+
 # Set directory permissions for runtime logs and file exports
 RUN mkdir -p /srv/shiny-server/OncoStratify/inst/cache && \
     mkdir -p /srv/shiny-server/OncoStratify/logs && \
@@ -74,4 +80,4 @@ HEALTHCHECK --interval=15s --timeout=5s --start-period=15s --retries=3 \
   CMD curl -f http://localhost:3838/ || exit 1
 
 # Run the Shiny application
-CMD ["sh", "-c", "unset SHINY_SERVER_VERSION && R -e \"Sys.setenv(SHINY_SERVER_VERSION = ''); shiny::runApp('/srv/shiny-server/OncoStratify', host = '0.0.0.0', port = 3838)\""]
+CMD ["R", "-e", "shiny::runApp('/srv/shiny-server/OncoStratify', host = '0.0.0.0', port = 3838)"]
